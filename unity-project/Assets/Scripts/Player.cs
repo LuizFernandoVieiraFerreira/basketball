@@ -7,6 +7,10 @@ public class Payer : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
 
+    public GameObject ball; // Reference to the ball GameObject
+    public Transform ballHoldPosition; // Position where the ball is held
+    public bool hasBall = true; // Whether the player has the ball
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -21,6 +25,38 @@ public class Payer : MonoBehaviour
 
         // Update animations based on direction
         UpdateAnimation();
+
+        // Handle ball dribbling or detachment
+        if (hasBall)
+        {
+            DribbleBall();
+        }
+        else
+        {
+            // Ball is free-floating or passed; handle separately
+        }
+
+        // if (Input.GetKeyDown(KeyCode.Space) && hasBall)
+        // {
+        //     ShootBall();
+        // }
+    }
+
+    private void DribbleBall()
+    {
+        // Make the ball follow the player at the ballHoldPosition
+        ball.transform.position = ballHoldPosition.position;
+    }
+
+    private void ShootBall()
+    {
+        // Detach the ball and give it a force
+        // hasBall = false;
+        // ball.transform.parent = null;
+
+        // Rigidbody2D ballRb = ball.GetComponent<Rigidbody2D>();
+        // ballRb.isKinematic = false;
+        // ballRb.linearVelocity = new Vector2(0, 5f); // Example shoot velocity
     }
 
     private void FixedUpdate()
@@ -34,18 +70,25 @@ public class Payer : MonoBehaviour
         // Determine the direction of movement
         string direction = GetMovementDirection();
 
-        string animationName = moveInput != Vector2.zero ? "Running" + direction : "Idle" + direction;
+        // string animationName = moveInput != Vector2.zero ? "Running" + direction : "Idle" + direction;
+        Debug.Log("Has ball: " + hasBall);
+
+        string animationName = hasBall 
+        ? (moveInput != Vector2.zero ? "Dribbling" + direction : "BallIdle" + direction)
+        : (moveInput != Vector2.zero ? "Running" + direction : "Idle" + direction);
         Debug.Log("Playing animation: " + animationName);
 
-        // Set the appropriate animation based on the direction and running state
-        if (moveInput != Vector2.zero)
-        {
-            animator.Play("Running" + direction);
-        }
-        else
-        {
-            animator.Play("Idle" + direction);
-        }
+        animator.Play(animationName);
+
+        // // Set the appropriate animation based on the direction and running state
+        // if (moveInput != Vector2.zero)
+        // {
+        //     animator.Play("Running" + direction);
+        // }
+        // else
+        // {
+        //     animator.Play("Idle" + direction);
+        // }
     }
 
     private string GetMovementDirection()
