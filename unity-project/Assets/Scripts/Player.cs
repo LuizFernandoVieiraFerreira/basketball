@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -7,10 +8,15 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     
-    public Transform ballHoldPosition; // Position where the ball is held
-    private bool hasBall = true; // Whether the player has the ball
+    public Transform ballHoldPosition;
+    private bool hasBall = true;
 
     private string lastDirection = "East";
+
+    private bool isPassing = false;
+    private Vector3 passDirection = Vector3.zero;
+
+    private string currentAnimation = string.Empty;
 
     void Start()
     {
@@ -46,8 +52,43 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void TriggerPassAnimation(Vector3 direction)
+    {
+        if (isPassing) return; // Prevent multiple passes
+        StartCoroutine(PlayPassAnimation(direction));
+    }
+
+    private IEnumerator PlayPassAnimation(Vector3 direction)
+    {
+        isPassing = true;
+        passDirection = direction;
+
+        string passAnimationName = GetPassAnimationName(passDirection);
+
+        if (!string.IsNullOrEmpty(passAnimationName))
+        {
+            currentAnimation = passAnimationName;
+            animator.Play(currentAnimation);
+
+            // Wait for the animation duration
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        }
+
+        isPassing = false;
+    }
+
+    public bool IsPassing()
+    {
+        return isPassing; // This will let the GameManager check if the player is still passing
+    }
+
     private void UpdateAnimation()
     {
+        if (isPassing)
+        {
+            return; // Avoid running other animation logic in this frame
+        }
+
         // Determine the direction of movement
         string direction = GetMovementDirection();
 
@@ -62,8 +103,31 @@ public class Player : MonoBehaviour
         ? (moveInput != Vector2.zero ? "Dribbling" + direction : "BallIdle" + lastDirection)
         : (moveInput != Vector2.zero ? "Running" + direction : "Idle" + lastDirection);
         
-        Debug.Log("Playing animation: " + animationName);
+        // Debug.Log("Playing animation: " + animationName);
         animator.Play(animationName);
+    }
+
+    private string GetPassAnimationName(Vector3 direction)
+    {
+        // Determine the animation name based on direction
+        if (direction.y > 0.5f && Mathf.Abs(direction.x) <= 0.5f)
+            return "PassReceiveNorth";
+        else if (direction.y > 0.5f && direction.x > 0.5f)
+            return "PassReceiveNorthEast";
+        else if (direction.y > 0.5f && direction.x < -0.5f)
+            return "PassReceiveNorthWest";
+        else if (direction.y < -0.5f && Mathf.Abs(direction.x) <= 0.5f)
+            return "PassReceiveSouth";
+        else if (direction.y < -0.5f && direction.x > 0.5f)
+            return "PassReceiveSouthEast";
+        else if (direction.y < -0.5f && direction.x < -0.5f)
+            return "PassReceiveSouthWest";
+        else if (Mathf.Abs(direction.y) <= 0.5f && direction.x > 0.5f)
+            return "PassReceiveEast";
+        else if (Mathf.Abs(direction.y) <= 0.5f && direction.x < -0.5f)
+            return "PassReceiveWest";
+
+        return string.Empty; // Return empty if no direction matches
     }
 
     private string GetMovementDirection()
@@ -103,13 +167,13 @@ public class Player : MonoBehaviour
     public void SetAsActive()
     {
         // Enable input and special visuals for the active player
-        Debug.Log($"{name} is now the active player!");
+        // Debug.Log($"{name} is now the active player!");
     }
 
     public void SetAsInactive()
     {
         // Disable input for inactive players
-        Debug.Log($"{name} is now inactive.");
+        // Debug.Log($"{name} is now inactive.");
     }
 
     public bool HasBall()
@@ -120,12 +184,12 @@ public class Player : MonoBehaviour
     public void TakeBall()
     {
         hasBall = true;
-        Debug.Log($"{name} now has the ball!");
+        // Debug.Log($"{name} now has the ball!");
     }
 
     public void DropBall()
     {
         hasBall = false;
-        Debug.Log($"{name} dropped the ball!");
+        // Debug.Log($"{name} dropped the ball!");
     }
 }

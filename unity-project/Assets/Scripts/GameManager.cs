@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
@@ -87,13 +88,34 @@ public class GameManager : MonoBehaviour
 
         if (targetPlayer != null)
         {
+            // Calculate the direction of the pass
+            Vector3 direction = (targetPlayer.transform.position - activePlayer.transform.position).normalized;
+
+            // Trigger the pass animation on the active player
+            activePlayer.TriggerPassAnimation(direction);
+
             // Detach the ball from the active player
             activePlayer.DropBall();
 
+            // Start the process of waiting for the animation to finish
+            StartCoroutine(WaitForPassAnimationAndInstantiateBall(targetPlayer));
             // Instantiate the ball and move it to the target player
-            activeBall = Instantiate(ballPrefab, activePlayer.ballHoldPosition.position, Quaternion.identity);
-            StartCoroutine(MoveBallToTarget(activeBall, targetPlayer));
+            // activeBall = Instantiate(ballPrefab, activePlayer.ballHoldPosition.position, Quaternion.identity);
+            // StartCoroutine(MoveBallToTarget(activeBall, targetPlayer));
         }
+    }
+
+    private IEnumerator WaitForPassAnimationAndInstantiateBall(Player targetPlayer)
+    {
+        // Wait until the pass animation is completed in the Player
+        while (activePlayer.IsPassing())
+        {
+            yield return null; // Wait until the passing state is no longer true
+        }
+
+        // Now instantiate the ball and move it to the target player
+        activeBall = Instantiate(ballPrefab, activePlayer.ballHoldPosition.position, Quaternion.identity);
+        StartCoroutine(MoveBallToTarget(activeBall, targetPlayer));
     }
 
     private Player FindClosestTeammate()
