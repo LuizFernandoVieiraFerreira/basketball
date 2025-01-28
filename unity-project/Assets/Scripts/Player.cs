@@ -31,18 +31,6 @@ public class Player : MonoBehaviour
 
         // Update animations based on direction
         UpdateAnimation();
-
-        if (Input.GetKeyDown(KeyCode.Space) && hasBall)
-        {
-            PassBall();
-        }
-    }
-
-    private void PassBall()
-    {
-        DropBall();
-        StopMovement();
-        UpdateAnimation();
     }
 
     private void FixedUpdate()
@@ -139,10 +127,5 @@ public class Player : MonoBehaviour
     {
         hasBall = false;
         Debug.Log($"{name} dropped the ball!");
-    }
-
-    private void StopMovement()
-    {
-        moveInput = Vector2.zero; // Stop player movement when they drop or pass the ball
     }
 }
