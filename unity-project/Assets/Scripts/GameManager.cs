@@ -76,6 +76,9 @@ public class GameManager : MonoBehaviour
 
         activePlayer = player;
         activePlayer.SetAsActive();
+
+         // Update the camera to follow the new active player
+        Camera.main.GetComponent<CameraFollow>().SetTarget(activePlayer.transform);
     }
 
     private void PassBall()
