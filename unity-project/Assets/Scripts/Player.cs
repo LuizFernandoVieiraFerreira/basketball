@@ -7,7 +7,8 @@ public class Payer : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
 
-    public GameObject ball; // Reference to the ball GameObject
+    public GameObject ballPrefab;
+    // public GameObject ball; // Reference to the ball GameObject
     public Transform ballHoldPosition; // Position where the ball is held
     public bool hasBall = true; // Whether the player has the ball
 
@@ -36,22 +37,33 @@ public class Payer : MonoBehaviour
             // Ball is free-floating or passed; handle separately
         }
 
-        // if (Input.GetKeyDown(KeyCode.Space) && hasBall)
-        // {
-        //     ShootBall();
-        // }
+        if (Input.GetKeyDown(KeyCode.Space) && hasBall)
+        {
+            ShootBall();
+        }
     }
 
     private void DribbleBall()
     {
         // Make the ball follow the player at the ballHoldPosition
-        ball.transform.position = ballHoldPosition.position;
+        // ball.transform.position = ballHoldPosition.position;
     }
 
     private void ShootBall()
     {
         // Detach the ball and give it a force
-        // hasBall = false;
+        hasBall = false;
+
+        // Instantiate the ball prefab
+        GameObject ball = Instantiate(ballPrefab, ballHoldPosition.position, Quaternion.identity);
+
+        // Add force to the ball for shooting
+        Rigidbody2D ballRb = ball.GetComponent<Rigidbody2D>();
+        ballRb.AddForce(Vector2.up * 500f); // Example force; adjust as needed
+
+        // Optionally destroy the ball after some time
+        Destroy(ball, 3f);
+
         // ball.transform.parent = null;
 
         // Rigidbody2D ballRb = ball.GetComponent<Rigidbody2D>();
@@ -79,16 +91,6 @@ public class Payer : MonoBehaviour
         Debug.Log("Playing animation: " + animationName);
 
         animator.Play(animationName);
-
-        // // Set the appropriate animation based on the direction and running state
-        // if (moveInput != Vector2.zero)
-        // {
-        //     animator.Play("Running" + direction);
-        // }
-        // else
-        // {
-        //     animator.Play("Idle" + direction);
-        // }
     }
 
     private string GetMovementDirection()

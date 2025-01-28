@@ -1,0 +1,624 @@
+fileFormatVersion: 2
+guid: 2e90b284029394ba38d64fb51101b43d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6000593673776939348
+    second: NES_Basket_and_Ball_SpriteSheet_0
+  - first:
+      213: -7600406927390846221
+    second: NES_Basket_and_Ball_SpriteSheet_1
+  - first:
+      213: -1284059885463852261
+    second: NES_Basket_and_Ball_SpriteSheet_2
+  - first:
+      213: 7633628272491537541
+    second: NES_Basket_and_Ball_SpriteSheet_3
+  - first:
+      213: -2753718044168483168
+    second: NES_Basket_and_Ball_SpriteSheet_4
+  - first:
+      213: 13411738117238799
+    second: NES_Basket_and_Ball_SpriteSheet_5
+  - first:
+      213: -3200906115296909782
+    second: NES_Basket_and_Ball_SpriteSheet_6
+  - first:
+      213: -433490521177128190
+    second: NES_Basket_and_Ball_SpriteSheet_7
+  - first:
+      213: 228743943019373027
+    second: NES_Basket_and_Ball_SpriteSheet_8
+  - first:
+      213: 1173409675062078281
+    second: NES_Basket_and_Ball_SpriteSheet_9
+  - first:
+      213: 7232772881283464855
+    second: NES_Basket_and_Ball_SpriteSheet_10
+  - first:
+      213: 9003867943145562688
+    second: NES_Basket_and_Ball_SpriteSheet_11
+  - first:
+      213: 3794787810367645642
+    second: NES_Basket_and_Ball_SpriteSheet_12
+  - first:
+      213: 383607451531315866
+    second: NES_Basket_and_Ball_SpriteSheet_13
+  - first:
+      213: -9149730685755863945
+    second: NES_Basket_and_Ball_SpriteSheet_14
+  - first:
+      213: 2468126632848548862
+    second: NES_Basket_and_Ball_SpriteSheet_15
+  - first:
+      213: -2563069162504493596
+    second: NES_Basket_and_Ball_SpriteSheet_16
+  - first:
+      213: 848486180882937997
+    second: NES_Basket_and_Ball_SpriteSheet_17
+  - first:
+      213: 368835298042732265
+    second: NES_Basket_and_Ball_SpriteSheet_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 34
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: caeb111a8db99bca0800000000000000
+      internalID: -6000593673776939348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 40
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f253701b2ee58690800000000000000
+      internalID: -7600406927390846221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 32
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1b2990665a1e2ee0800000000000000
+      internalID: -1284059885463852261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 40
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 584ac39187810f960800000000000000
+      internalID: 7633628272491537541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 32
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ae01c55704d8c9d0800000000000000
+      internalID: -2753718044168483168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 40
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f007c4e97e5af2000800000000000000
+      internalID: 13411738117238799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 32
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a262a56e8d81493d0800000000000000
+      internalID: -3200906115296909782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 40
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2030dbfeaaeebf9f0800000000000000
+      internalID: -433490521177128190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 32
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e1213c7769ac2300800000000000000
+      internalID: 228743943019373027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 18
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94be41ae1e9c84010800000000000000
+      internalID: 1173409675062078281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 24
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79ebaf95d98ff5460800000000000000
+      internalID: 7232772881283464855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 24
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 042e7b3903a24fc70800000000000000
+      internalID: 9003867943145562688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 24
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac722fa686bc9a430800000000000000
+      internalID: 3794787810367645642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_13
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 24
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9a87b9d1f8d25500800000000000000
+      internalID: 383607451531315866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77cc70d2b60a50180800000000000000
+      internalID: -9149730685755863945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 9
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef36e9b881c804220800000000000000
+      internalID: 2468126632848548862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_16
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 6
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e5692a2d262e6cd0800000000000000
+      internalID: -2563069162504493596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_17
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 3
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d88fa50afad66cb00800000000000000
+      internalID: 848486180882937997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NES_Basket_and_Ball_SpriteSheet_18
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 0
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ee5678dfbd5e1500800000000000000
+      internalID: 368835298042732265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 056a55229d0844591a2ab50bba85aafe
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      NES_Basket_and_Ball_SpriteSheet_0: -6000593673776939348
+      NES_Basket_and_Ball_SpriteSheet_1: -7600406927390846221
+      NES_Basket_and_Ball_SpriteSheet_10: 7232772881283464855
+      NES_Basket_and_Ball_SpriteSheet_11: 9003867943145562688
+      NES_Basket_and_Ball_SpriteSheet_12: 3794787810367645642
+      NES_Basket_and_Ball_SpriteSheet_13: 383607451531315866
+      NES_Basket_and_Ball_SpriteSheet_14: -9149730685755863945
+      NES_Basket_and_Ball_SpriteSheet_15: 2468126632848548862
+      NES_Basket_and_Ball_SpriteSheet_16: -2563069162504493596
+      NES_Basket_and_Ball_SpriteSheet_17: 848486180882937997
+      NES_Basket_and_Ball_SpriteSheet_18: 368835298042732265
+      NES_Basket_and_Ball_SpriteSheet_2: -1284059885463852261
+      NES_Basket_and_Ball_SpriteSheet_3: 7633628272491537541
+      NES_Basket_and_Ball_SpriteSheet_4: -2753718044168483168
+      NES_Basket_and_Ball_SpriteSheet_5: 13411738117238799
+      NES_Basket_and_Ball_SpriteSheet_6: -3200906115296909782
+      NES_Basket_and_Ball_SpriteSheet_7: -433490521177128190
+      NES_Basket_and_Ball_SpriteSheet_8: 228743943019373027
+      NES_Basket_and_Ball_SpriteSheet_9: 1173409675062078281
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
