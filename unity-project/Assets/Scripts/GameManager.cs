@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public Player activePlayer;
     private GameObject activeBall;
 
+    public Transform leftHoop;
+    public Transform rightHoop;
+
     private void Awake()
     {
         if (Instance == null)
@@ -57,6 +60,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && activePlayer.HasBall())
         {
             PassBall();
+        }
+        else if (Input.GetKeyDown(KeyCode.Z) && activePlayer.HasBall())
+        {
+            ThrowBall();
         }
     }
 
@@ -127,5 +134,74 @@ public class GameManager : MonoBehaviour
         Destroy(ball);
         targetPlayer.TakeBall();
         SetActivePlayer(targetPlayer);
+    }
+
+    private void ThrowBall()
+    {
+        Transform targetHoop = DetermineTargetHoop();
+        
+        if (targetHoop != null)
+        {
+            activePlayer.DropBall();
+
+            activeBall = Instantiate(ballPrefab, activePlayer.ballHoldPosition.position, Quaternion.identity);
+            StartCoroutine(MoveBallToHoop(activeBall, targetHoop));
+        }
+    }
+
+    private Transform DetermineTargetHoop()
+    {
+        // Logic to decide which hoop to target (example: closest hoop)
+        Transform closestHoop = null;
+        float distanceToLeftHoop = Vector3.Distance(activePlayer.transform.position, leftHoop.position);
+        float distanceToRightHoop = Vector3.Distance(activePlayer.transform.position, rightHoop.position);
+
+        if (distanceToLeftHoop < distanceToRightHoop)
+        {
+            closestHoop = leftHoop;
+        }
+        else
+        {
+            closestHoop = rightHoop;
+        }
+
+        return closestHoop;
+    }
+
+    private System.Collections.IEnumerator MoveBallToHoop(GameObject ball, Transform hoop)
+    {
+        Vector3 startPosition = ball.transform.position;
+        Vector3 targetPosition = hoop.position;
+
+        float travelTime = 1f; // Adjust time to make it feel realistic
+        float elapsedTime = 0f;
+
+        while (elapsedTime < travelTime)
+        {
+            ball.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / travelTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        ball.transform.position = targetPosition;
+
+        // Check if the ball successfully scores
+        CheckIfScored(ball, hoop);
+
+        Destroy(ball); // Clean up the ball after the throw
+    }
+
+    private void CheckIfScored(GameObject ball, Transform hoop)
+    {
+        float distance = Vector3.Distance(ball.transform.position, hoop.position);
+
+        if (distance <= 0.5f) // Adjust threshold for scoring
+        {
+            Debug.Log($"Scored in {hoop.name}!");
+        }
+        else
+        {
+            Debug.Log("Missed the shot!");
+        }
     }
 }
