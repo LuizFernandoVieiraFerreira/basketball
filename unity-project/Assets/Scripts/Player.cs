@@ -1,25 +1,29 @@
 using UnityEngine;
 
-public class Payer : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float moveSpeed = 2f;
     private Animator animator;
     private Rigidbody2D rb;
     private Vector2 moveInput;
-
-    public GameObject ballPrefab;
+    // public GameObject ballPrefab;
     // public GameObject ball; // Reference to the ball GameObject
     public Transform ballHoldPosition; // Position where the ball is held
-    public bool hasBall = true; // Whether the player has the ball
+    private bool hasBall = true; // Whether the player has the ball
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
-
+    
     void Update()
     {
+        // Only process input if this is the active player
+        if (GameManager.Instance.activePlayer != this)
+        {
+            return;
+        }
         // Get player movement input (using the arrow keys for simplicity)
         moveInput.x = Input.GetAxisRaw("Horizontal");
         moveInput.y = Input.GetAxisRaw("Vertical");
@@ -55,14 +59,14 @@ public class Payer : MonoBehaviour
         hasBall = false;
 
         // Instantiate the ball prefab
-        GameObject ball = Instantiate(ballPrefab, ballHoldPosition.position, Quaternion.identity);
+        // GameObject ball = Instantiate(ballPrefab, ballHoldPosition.position, Quaternion.identity);
 
         // Add force to the ball for shooting
-        Rigidbody2D ballRb = ball.GetComponent<Rigidbody2D>();
-        ballRb.AddForce(Vector2.up * 500f); // Example force; adjust as needed
+        // Rigidbody2D ballRb = ball.GetComponent<Rigidbody2D>();
+        // ballRb.AddForce(Vector2.up * 500f); // Example force; adjust as needed
 
         // Optionally destroy the ball after some time
-        Destroy(ball, 3f);
+        // Destroy(ball, 3f);
 
         // ball.transform.parent = null;
 
@@ -125,5 +129,34 @@ public class Payer : MonoBehaviour
         }
 
         return "East"; // Default to idle if nothing matches
+    }
+
+    public void SetAsActive()
+    {
+        // Enable input and special visuals for the active player
+        Debug.Log($"{name} is now the active player!");
+    }
+
+    public void SetAsInactive()
+    {
+        // Disable input for inactive players
+        Debug.Log($"{name} is now inactive.");
+    }
+
+    public bool HasBall()
+    {
+        return hasBall;
+    }
+
+    public void TakeBall()
+    {
+        hasBall = true;
+        Debug.Log($"{name} now has the ball!");
+    }
+
+    public void DropBall()
+    {
+        hasBall = false;
+        Debug.Log($"{name} dropped the ball!");
     }
 }
