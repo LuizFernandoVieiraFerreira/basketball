@@ -32,32 +32,30 @@ public class Player : MonoBehaviour
         // Update animations based on direction
         UpdateAnimation();
 
-        // Handle ball dribbling or detachment
-        if (hasBall)
-        {
-            // DribbleBall();
-        }
-        else
-        {
-            // Ball is free-floating or passed; handle separately
-        }
-
         if (Input.GetKeyDown(KeyCode.Space) && hasBall)
         {
-            ShootBall();
+            PassBall();
         }
     }
 
-    private void ShootBall()
+    private void PassBall()
     {
-        // Detach the ball and give it a force
-        hasBall = false;
+        DropBall();
+        StopMovement();
+        UpdateAnimation();
     }
 
     private void FixedUpdate()
     {
-        // Move player
-        rb.linearVelocity = moveInput.normalized * moveSpeed;
+        // Move player only if they have the ball
+        if (hasBall)
+        {
+            rb.linearVelocity = moveInput.normalized * moveSpeed;
+        }
+        else
+        {
+            rb.linearVelocity = Vector2.zero;  // Stop movement if the player doesn't have the ball
+        }
     }
 
     private void UpdateAnimation()
@@ -71,14 +69,12 @@ public class Player : MonoBehaviour
             lastDirection = direction; // Store the direction when moving
         }
 
-        // string animationName = moveInput != Vector2.zero ? "Running" + direction : "Idle" + direction;
-        Debug.Log("Has ball: " + hasBall);
-
+        // Handle animations based on whether the player has the ball or not
         string animationName = hasBall 
         ? (moveInput != Vector2.zero ? "Dribbling" + direction : "BallIdle" + lastDirection)
         : (moveInput != Vector2.zero ? "Running" + direction : "Idle" + lastDirection);
+        
         Debug.Log("Playing animation: " + animationName);
-
         animator.Play(animationName);
     }
 
@@ -143,5 +139,10 @@ public class Player : MonoBehaviour
     {
         hasBall = false;
         Debug.Log($"{name} dropped the ball!");
+    }
+
+    private void StopMovement()
+    {
+        moveInput = Vector2.zero; // Stop player movement when they drop or pass the ball
     }
 }
