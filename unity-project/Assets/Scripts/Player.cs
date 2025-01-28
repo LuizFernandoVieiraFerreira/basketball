@@ -6,17 +6,18 @@ public class Player : MonoBehaviour
     private Animator animator;
     private Rigidbody2D rb;
     private Vector2 moveInput;
-    // public GameObject ballPrefab;
-    // public GameObject ball; // Reference to the ball GameObject
+    
     public Transform ballHoldPosition; // Position where the ball is held
     private bool hasBall = true; // Whether the player has the ball
+
+    private string lastDirection = "East";
 
     void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
-    
+
     void Update()
     {
         // Only process input if this is the active player
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
         // Handle ball dribbling or detachment
         if (hasBall)
         {
-            DribbleBall();
+            // DribbleBall();
         }
         else
         {
@@ -47,32 +48,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void DribbleBall()
-    {
-        // Make the ball follow the player at the ballHoldPosition
-        // ball.transform.position = ballHoldPosition.position;
-    }
-
     private void ShootBall()
     {
         // Detach the ball and give it a force
         hasBall = false;
-
-        // Instantiate the ball prefab
-        // GameObject ball = Instantiate(ballPrefab, ballHoldPosition.position, Quaternion.identity);
-
-        // Add force to the ball for shooting
-        // Rigidbody2D ballRb = ball.GetComponent<Rigidbody2D>();
-        // ballRb.AddForce(Vector2.up * 500f); // Example force; adjust as needed
-
-        // Optionally destroy the ball after some time
-        // Destroy(ball, 3f);
-
-        // ball.transform.parent = null;
-
-        // Rigidbody2D ballRb = ball.GetComponent<Rigidbody2D>();
-        // ballRb.isKinematic = false;
-        // ballRb.linearVelocity = new Vector2(0, 5f); // Example shoot velocity
     }
 
     private void FixedUpdate()
@@ -86,12 +65,18 @@ public class Player : MonoBehaviour
         // Determine the direction of movement
         string direction = GetMovementDirection();
 
+        // Update the last direction if player is moving
+        if (moveInput != Vector2.zero)
+        {
+            lastDirection = direction; // Store the direction when moving
+        }
+
         // string animationName = moveInput != Vector2.zero ? "Running" + direction : "Idle" + direction;
         Debug.Log("Has ball: " + hasBall);
 
         string animationName = hasBall 
-        ? (moveInput != Vector2.zero ? "Dribbling" + direction : "BallIdle" + direction)
-        : (moveInput != Vector2.zero ? "Running" + direction : "Idle" + direction);
+        ? (moveInput != Vector2.zero ? "Dribbling" + direction : "BallIdle" + lastDirection)
+        : (moveInput != Vector2.zero ? "Running" + direction : "Idle" + lastDirection);
         Debug.Log("Playing animation: " + animationName);
 
         animator.Play(animationName);
@@ -101,7 +86,7 @@ public class Player : MonoBehaviour
     {
         if (moveInput == Vector2.zero)
         {
-            return "East"; // Idle state
+            return lastDirection; // Idle state
         }
 
         // Determine direction based on x and y inputs (adjust these as necessary)
