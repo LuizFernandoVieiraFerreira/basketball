@@ -210,13 +210,11 @@ public class GameManager : MonoBehaviour
             yield return null; // Wait until the throwing state is no longer true
         }
 
-        float yOffset = 12f / 16f;
+        float yOffset = 27f / 16f;
         Vector3 spawnPosition = activePlayer.ballHoldPosition.position + new Vector3(0, yOffset, 0);
 
         // Now instantiate the ball and move it to the hoop
-        // activeBall = Instantiate(ballPrefab, spawnPosition, Quaternion.identity);
-        // StartCoroutine(MoveBallToTarget(activeBall, targetPlayer));
-        activeBall = Instantiate(ballPrefab, activePlayer.ballHoldPosition.position, Quaternion.identity);
+        activeBall = Instantiate(ballPrefab, spawnPosition, Quaternion.identity);
         StartCoroutine(MoveBallToHoop(activeBall, targetHoop));
     }
 
@@ -250,6 +248,12 @@ public class GameManager : MonoBehaviour
         if (distance <= 0.5f) // Adjust threshold for scoring
         {
             Debug.Log($"Scored in {hoop.name}!");
+            if (teamPlayers.Count > 0)
+            {
+                Player firstPlayer = teamPlayers[0];
+                SetActivePlayer(firstPlayer);
+                firstPlayer.TakeBall();
+            }
         }
         else
         {

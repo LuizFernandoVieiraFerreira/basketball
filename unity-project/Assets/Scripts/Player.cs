@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
         isThrowing = true;
         throwDirection = direction;
 
-        string throwAnimationName = GetThrowAnimationName(passDirection);
+        string throwAnimationName = GetThrowAnimationName(throwDirection);
 
         if (!string.IsNullOrEmpty(throwAnimationName))
         {
