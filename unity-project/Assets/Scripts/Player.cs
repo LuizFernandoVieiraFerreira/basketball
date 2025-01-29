@@ -19,10 +19,10 @@ public class Player : MonoBehaviour
     private string currentAnimation = string.Empty;
 
     // Define the court's boundary coordinates
-    private Vector2 topLeft = new Vector2(-11.5f, 2.94f);
-    private Vector2 bottomLeft = new Vector2(-14.44f, -2.94f);
-    private Vector2 topRight = new Vector2(11.5f, 2.94f);
-    private Vector2 bottomRight = new Vector2(14.44f, -2.94f);
+    private Vector2 topLeft = new Vector2(-11.5f, 2.88f);
+    private Vector2 bottomLeft = new Vector2(-14.44f, -2.88f);
+    private Vector2 topRight = new Vector2(11.5f, 2.88f);
+    private Vector2 bottomRight = new Vector2(14.44f, -2.88f);
 
     void Start()
     {

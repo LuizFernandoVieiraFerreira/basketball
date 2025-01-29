@@ -113,8 +113,11 @@ public class GameManager : MonoBehaviour
             yield return null; // Wait until the passing state is no longer true
         }
 
+        float yOffset = 12f / 16f;
+        Vector3 spawnPosition = activePlayer.ballHoldPosition.position + new Vector3(0, yOffset, 0);
+
         // Now instantiate the ball and move it to the target player
-        activeBall = Instantiate(ballPrefab, activePlayer.ballHoldPosition.position, Quaternion.identity);
+        activeBall = Instantiate(ballPrefab, spawnPosition, Quaternion.identity);
         StartCoroutine(MoveBallToTarget(activeBall, targetPlayer));
     }
 
