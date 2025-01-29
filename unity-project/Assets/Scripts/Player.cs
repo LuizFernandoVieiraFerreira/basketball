@@ -18,6 +18,12 @@ public class Player : MonoBehaviour
 
     private string currentAnimation = string.Empty;
 
+    // Define the court's boundary coordinates
+    private Vector2 topLeft = new Vector2(-11.5f, 2.94f);
+    private Vector2 bottomLeft = new Vector2(-14.44f, -2.94f);
+    private Vector2 topRight = new Vector2(11.5f, 2.94f);
+    private Vector2 bottomRight = new Vector2(14.44f, -2.94f);
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -44,7 +50,24 @@ public class Player : MonoBehaviour
         // Move player only if they have the ball
         if (hasBall)
         {
-            rb.linearVelocity = moveInput.normalized * moveSpeed;
+            // rb.linearVelocity = moveInput.normalized * moveSpeed;
+
+            // // Calculate movement
+            // Vector2 desiredPosition = rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime;
+            // // Clamp the position to within the court boundaries
+            // float clampedX = Mathf.Clamp(desiredPosition.x, bottomLeft.x, topRight.x);
+            // float clampedY = Mathf.Clamp(desiredPosition.y, bottomLeft.y, topLeft.y);
+            // // Apply the clamped position to the Rigidbody2D
+            // rb.MovePosition(new Vector2(clampedX, clampedY));
+
+            // Calculate movement
+            Vector2 desiredPosition = rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime;
+
+            // Check if the new position is inside the court polygon
+            if (IsInsideCourt(desiredPosition))
+            {
+                rb.MovePosition(desiredPosition);
+            }
         }
         else
         {
@@ -191,5 +214,27 @@ public class Player : MonoBehaviour
     {
         hasBall = false;
         // Debug.Log($"{name} dropped the ball!");
+    }
+
+    // Check if a point is inside a quadrilateral using cross products
+    private bool IsInsideCourt(Vector2 point)
+    {
+        Vector2[] courtBoundary = { topLeft, bottomLeft, bottomRight, topRight };
+
+        int crossings = 0;
+        for (int i = 0; i < courtBoundary.Length; i++)
+        {
+            Vector2 a = courtBoundary[i];
+            Vector2 b = courtBoundary[(i + 1) % courtBoundary.Length];
+
+            // Ray-casting method: Count how many times a horizontal ray crosses the edges
+            if (((a.y > point.y) != (b.y > point.y)) && 
+                (point.x < (b.x - a.x) * (point.y - a.y) / (b.y - a.y) + a.x))
+            {
+                crossings++;
+            }
+        }
+
+        return (crossings % 2) == 1; // Odd crossings mean inside
     }
 }
