@@ -15,8 +15,11 @@ public class GameManager : MonoBehaviour
     public Player activePlayer;
     private GameObject activeBall;
 
-    public Transform leftHoop;
-    public Transform rightHoop;
+    public Hoop leftHoop;
+    public Hoop rightHoop;
+
+    public Transform leftHoopTransform;
+    public Transform rightHoopTransform;
 
     private void Awake()
     {
@@ -187,16 +190,16 @@ public class GameManager : MonoBehaviour
     {
         // Logic to decide which hoop to target (example: closest hoop)
         Transform closestHoop = null;
-        float distanceToLeftHoop = Vector3.Distance(activePlayer.transform.position, leftHoop.position);
-        float distanceToRightHoop = Vector3.Distance(activePlayer.transform.position, rightHoop.position);
+        float distanceToLeftHoop = Vector3.Distance(activePlayer.transform.position, leftHoopTransform.position);
+        float distanceToRightHoop = Vector3.Distance(activePlayer.transform.position, rightHoopTransform.position);
 
         if (distanceToLeftHoop < distanceToRightHoop)
         {
-            closestHoop = leftHoop;
+            closestHoop = leftHoopTransform;
         }
         else
         {
-            closestHoop = rightHoop;
+            closestHoop = rightHoopTransform;
         }
 
         return closestHoop;
@@ -248,6 +251,9 @@ public class GameManager : MonoBehaviour
         if (distance <= 0.5f) // Adjust threshold for scoring
         {
             Debug.Log($"Scored in {hoop.name}!");
+
+            leftHoop.TriggerScoreAnimation();
+
             if (teamPlayers.Count > 0)
             {
                 Player firstPlayer = teamPlayers[0];

@@ -446,6 +446,8 @@ MonoBehaviour:
   target: {fileID: 0}
   offset: {x: 0, y: 0, z: -10}
   smoothSpeed: 10
+  minX: -11
+  maxX: 11
 --- !u!1 &577482463
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,6 +669,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1358308651}
   - component: {fileID: 1358308652}
+  - component: {fileID: 1358308653}
+  - component: {fileID: 1358308654}
   m_Layer: 0
   m_Name: RightHoop
   m_TagString: Untagged
@@ -744,6 +748,40 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1358308653
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358308650}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1b468d5af1f5640b5867502a1d85557e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1358308654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358308650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f211346f8a9104abca500665b9bc7d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1696370545
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,8 +834,10 @@ MonoBehaviour:
   - {fileID: 577482464}
   teamPlayers: []
   activePlayer: {fileID: 0}
-  leftHoop: {fileID: 2015390798}
-  rightHoop: {fileID: 1358308651}
+  leftHoop: {fileID: 2015390800}
+  rightHoop: {fileID: 1358308654}
+  leftHoopTransform: {fileID: 2015390798}
+  rightHoopTransform: {fileID: 1358308651}
 --- !u!1 &1757041317
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,6 +881,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2015390798}
   - component: {fileID: 2015390797}
+  - component: {fileID: 2015390799}
+  - component: {fileID: 2015390800}
   m_Layer: 0
   m_Name: LeftHoop
   m_TagString: Untagged
@@ -918,6 +960,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1757041318}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2015390799
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015390796}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1b468d5af1f5640b5867502a1d85557e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2015390800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015390796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f211346f8a9104abca500665b9bc7d00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
