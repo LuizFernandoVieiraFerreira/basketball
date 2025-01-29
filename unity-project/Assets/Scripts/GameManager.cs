@@ -170,10 +170,16 @@ public class GameManager : MonoBehaviour
         
         if (targetHoop != null)
         {
+            // Calculate the direction of the pass
+            Vector3 direction = (targetHoop.transform.position - activePlayer.transform.position).normalized;
+
+            activePlayer.TriggerThrowAnimation(direction);
+
             activePlayer.DropBall();
 
-            activeBall = Instantiate(ballPrefab, activePlayer.ballHoldPosition.position, Quaternion.identity);
-            StartCoroutine(MoveBallToHoop(activeBall, targetHoop));
+            StartCoroutine(WaitForThrowAnimationAndInstantiateBall(targetHoop));
+            // activeBall = Instantiate(ballPrefab, activePlayer.ballHoldPosition.position, Quaternion.identity);
+            // StartCoroutine(MoveBallToHoop(activeBall, targetHoop));
         }
     }
 
@@ -194,6 +200,24 @@ public class GameManager : MonoBehaviour
         }
 
         return closestHoop;
+    }
+
+    private IEnumerator WaitForThrowAnimationAndInstantiateBall(Transform targetHoop)
+    {
+        // Wait until the throw animation is completed in the Player
+        while (activePlayer.IsThrowing())
+        {
+            yield return null; // Wait until the throwing state is no longer true
+        }
+
+        float yOffset = 12f / 16f;
+        Vector3 spawnPosition = activePlayer.ballHoldPosition.position + new Vector3(0, yOffset, 0);
+
+        // Now instantiate the ball and move it to the hoop
+        // activeBall = Instantiate(ballPrefab, spawnPosition, Quaternion.identity);
+        // StartCoroutine(MoveBallToTarget(activeBall, targetPlayer));
+        activeBall = Instantiate(ballPrefab, activePlayer.ballHoldPosition.position, Quaternion.identity);
+        StartCoroutine(MoveBallToHoop(activeBall, targetHoop));
     }
 
     private System.Collections.IEnumerator MoveBallToHoop(GameObject ball, Transform hoop)

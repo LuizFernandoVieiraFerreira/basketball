@@ -18,11 +18,13 @@ public class Player : MonoBehaviour
 
     private string currentAnimation = string.Empty;
 
-    // Define the court's boundary coordinates
     private Vector2 topLeft = new Vector2(-11.5f, 2.88f);
     private Vector2 bottomLeft = new Vector2(-14.44f, -2.88f);
     private Vector2 topRight = new Vector2(11.5f, 2.88f);
     private Vector2 bottomRight = new Vector2(14.44f, -2.88f);
+
+    private bool isThrowing = false;
+    private Vector3 throwDirection = Vector3.zero;
 
     void Start()
     {
@@ -77,7 +79,7 @@ public class Player : MonoBehaviour
 
     public void TriggerPassAnimation(Vector3 direction)
     {
-        if (isPassing) return; // Prevent multiple passes
+        if (isPassing) return;
         StartCoroutine(PlayPassAnimation(direction));
     }
 
@@ -105,9 +107,62 @@ public class Player : MonoBehaviour
         return isPassing; // This will let the GameManager check if the player is still passing
     }
 
+    public void TriggerThrowAnimation(Vector3 direction)
+    {
+        if (isThrowing) return;
+        StartCoroutine(PlayThrowAnimation(direction));
+    }
+
+    private IEnumerator PlayThrowAnimation(Vector3 direction)
+    {
+        isThrowing = true;
+        throwDirection = direction;
+
+        string throwAnimationName = GetThrowAnimationName(passDirection);
+
+        if (!string.IsNullOrEmpty(throwAnimationName))
+        {
+            currentAnimation = throwAnimationName;
+            animator.Play(currentAnimation);
+
+            // Wait for the animation duration
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+        }
+
+        isThrowing = false;
+    }
+
+    private string GetThrowAnimationName(Vector3 direction)
+    {
+        // Determine the animation name based on direction
+        if (direction.y > 0.5f && Mathf.Abs(direction.x) <= 0.5f)
+            return "StandShootNorth";
+        else if (direction.y > 0.5f && direction.x > 0.5f)
+            return "StandShootNorthEast";
+        else if (direction.y > 0.5f && direction.x < -0.5f)
+            return "StandShootNorthWest";
+        else if (direction.y < -0.5f && Mathf.Abs(direction.x) <= 0.5f)
+            return "StandShootSouth";
+        else if (direction.y < -0.5f && direction.x > 0.5f)
+            return "StandShootSouthEast";
+        else if (direction.y < -0.5f && direction.x < -0.5f)
+            return "StandShootSouthWest";
+        else if (Mathf.Abs(direction.y) <= 0.5f && direction.x > 0.5f)
+            return "StandShootEast";
+        else if (Mathf.Abs(direction.y) <= 0.5f && direction.x < -0.5f)
+            return "StandShootWest";
+
+        return string.Empty; // Return empty if no direction matches
+    }
+
+    public bool IsThrowing()
+    {
+        return isThrowing; // This will let the GameManager check if the player is still passing
+    }
+
     private void UpdateAnimation()
     {
-        if (isPassing)
+        if (isPassing || isThrowing)
         {
             return; // Avoid running other animation logic in this frame
         }
