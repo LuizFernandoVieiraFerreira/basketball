@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
         {
             return;
         }
+
         // Get player movement input (using the arrow keys for simplicity)
         moveInput.x = Input.GetAxisRaw("Horizontal");
         moveInput.y = Input.GetAxisRaw("Vertical");
@@ -50,8 +51,8 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         // Move player only if they have the ball
-        if (hasBall)
-        {
+        // if (hasBall)
+        // {
             // rb.linearVelocity = moveInput.normalized * moveSpeed;
 
             // // Calculate movement
@@ -70,11 +71,11 @@ public class Player : MonoBehaviour
             {
                 rb.MovePosition(desiredPosition);
             }
-        }
-        else
-        {
-            rb.linearVelocity = Vector2.zero;  // Stop movement if the player doesn't have the ball
-        }
+        // }
+        // else
+        // {
+        //     rb.linearVelocity = Vector2.zero;  // Stop movement if the player doesn't have the ball
+        // }
     }
 
     public void TriggerPassAnimation(Vector3 direction)
@@ -291,5 +292,16 @@ public class Player : MonoBehaviour
         }
 
         return (crossings % 2) == 1; // Odd crossings mean inside
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"Is Passing: {isPassing}");
+        if (other.CompareTag("Ball") && !hasBall && !isPassing)
+        {
+            Debug.Log("Player collided with Ball!");
+            TakeBall();
+            Destroy(other.gameObject);
+        }
     }
 }

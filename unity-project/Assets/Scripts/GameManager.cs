@@ -249,22 +249,19 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        ball.transform.position = targetPosition;
+        // Introduce a small random variation to simulate human error
+        float missOffset = Random.Range(-0.7f, 0.7f); // Adjust for difficulty
+        ball.transform.position = targetPosition + new Vector3(missOffset, 0, missOffset);
 
         // Check if the ball successfully scores
-        CheckIfScored(ball, hoop);
+        // CheckIfScored(ball, hoop);
 
-        Destroy(ball); // Clean up the ball after the throw
-    }
-
-    private void CheckIfScored(GameObject ball, Transform hoop)
-    {
+        // Determine if the shot is successful
         float distance = Vector3.Distance(ball.transform.position, hoop.position);
-
-        if (distance <= 0.5f) // Adjust threshold for scoring
+        if (distance <= 0.5f) // Successful shot
         {
             Debug.Log($"Scored in {hoop.name}!");
-
+            Destroy(ball);
             leftHoop.TriggerScoreAnimation();
 
             if (teamPlayers.Count > 0)
@@ -277,6 +274,135 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Missed the shot!");
+
+            StartCoroutine(HandleMiss(ball, hoop));
         }
+    }
+
+    private IEnumerator HandleMiss(GameObject ball, Transform hoop)
+    {
+        Vector2 startPosition = ball.transform.position;
+        Vector2 missTarget;
+
+        // // Choose one of three predefined miss zones
+        // int missType = Random.Range(0, 3);
+
+        // if (missType == 0) // Short Front Rim
+        // {
+        //     missTarget = new Vector2(hoop.position.x, hoop.position.y - 1f); // Lands near the hoop
+        // }
+        // else if (missType == 1) // Back Rim Bounce
+        // {
+        //     missTarget = new Vector2(hoop.position.x, hoop.position.y - 3f); // Lands near free-throw line
+        // }
+        // else // Side Rim Miss
+        // {
+        //     missTarget = new Vector2(hoop.position.x + Random.Range(-3f, 3f), hoop.position.y - 2f); // Lands left or right
+        // }
+
+        // Manually define two possible miss zones (e.g., near the rim or at a different angle)
+        int missType = Random.Range(0, 2); // Only two options for deterministic behavior
+
+        if (missType == 0) // Near the front rim
+        {
+            missTarget = new Vector3(hoop.position.x + 1f, hoop.position.y - 2f, hoop.position.z); // Slight miss near the hoop
+        }
+        else // Back or side miss
+        {
+            missTarget = new Vector3(hoop.position.x + Random.Range(2f, 3f), hoop.position.y - 2f, hoop.position.z); // Lands off-center
+        }
+
+        float travelTime = 0.7f;
+        float elapsedTime = 0f;
+        float arcHeight = 2f;
+
+        while (elapsedTime < travelTime)
+        {
+            float t = elapsedTime / travelTime;
+
+            // X and Y move linearly
+            float x = Mathf.Lerp(startPosition.x, missTarget.x, t);
+            float y = Mathf.Lerp(startPosition.y, missTarget.y, t) + arcHeight * Mathf.Sin(t * Mathf.PI);
+
+            ball.transform.position = new Vector2(x, y);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        HandleRebound(ball);
+    }
+
+    private void HandleRebound(GameObject ball)
+    {
+        Player nearestPlayer = FindNearestPlayer(ball.transform.position);
+
+        if (nearestPlayer != null)
+        {
+            // Debug.Log($"{nearestPlayer.name} grabbed the rebound!");
+            Debug.Log($"Nearest player {nearestPlayer.name} activated!");
+            SetActivePlayer(nearestPlayer);
+            // nearestPlayer.TakeBall();
+            // Destroy(ball);
+        }
+        else
+        {
+            Debug.Log("No one got the rebound!");
+            // Destroy(ball, 2f);
+            // Add a small random movement to keep the ball moving around
+            StartCoroutine(MoveBallContinuing(ball));
+        }
+    }
+
+    private IEnumerator MoveBallContinuing(GameObject ball)
+    {
+        Vector3 lastDirection = ball.GetComponent<Rigidbody>().linearVelocity.normalized;
+        float maxDistance = 5f; // Max distance the ball can move in one step
+
+        float travelTime = 1f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < travelTime)
+        {
+            // Move the ball in the last direction or in a random direction
+            Vector3 randomDirection = new Vector3(
+                lastDirection.x + Random.Range(-0.1f, 0.1f),
+                lastDirection.y + Random.Range(-0.1f, 0.1f),
+                lastDirection.z + Random.Range(-0.1f, 0.1f)
+            ).normalized;
+
+            ball.transform.position += randomDirection * maxDistance * Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        // After this, recheck if the closest player can get the ball
+        Player nearestPlayer = FindNearestPlayer(ball.transform.position);
+        if (nearestPlayer != null)
+        {
+            Debug.Log($"{nearestPlayer.name} is now close to the ball!");
+            SetActivePlayer(nearestPlayer);
+            // nearestPlayer.TakeBall();
+            // Destroy(ball);
+        }
+    }
+
+    private Player FindNearestPlayer(Vector3 ballPosition)
+    {
+        Player closestPlayer = null;
+        float minDistance = float.MaxValue;
+
+        foreach (Player player in teamPlayers)
+        {
+            float distance = Vector3.Distance(player.transform.position, ballPosition);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closestPlayer = player;
+            }
+        }
+
+        return closestPlayer;
     }
 }
