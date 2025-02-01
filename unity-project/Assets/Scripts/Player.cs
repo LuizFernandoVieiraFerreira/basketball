@@ -136,21 +136,21 @@ public class Player : MonoBehaviour
     {
         // Determine the animation name based on direction
         if (direction.y > 0.5f && Mathf.Abs(direction.x) <= 0.5f)
-            return "StandShootNorth";
+            return "JumpShootNorth"; // StandShootNorth
         else if (direction.y > 0.5f && direction.x > 0.5f)
-            return "StandShootNorthEast";
+            return "JumpShootNorthEast"; // StandShootNorthEast
         else if (direction.y > 0.5f && direction.x < -0.5f)
-            return "StandShootNorthWest";
+            return "JumpShootNorthWest"; // StandShootNorthWest
         else if (direction.y < -0.5f && Mathf.Abs(direction.x) <= 0.5f)
-            return "StandShootSouth";
+            return "JumpShootSouth"; // StandShootSouth
         else if (direction.y < -0.5f && direction.x > 0.5f)
-            return "StandShootSouthEast";
+            return "JumpShootSouthEast"; // StandShootSouthEast
         else if (direction.y < -0.5f && direction.x < -0.5f)
-            return "StandShootSouthWest";
+            return "JumpShootSouthWest"; // StandShootSouthWest
         else if (Mathf.Abs(direction.y) <= 0.5f && direction.x > 0.5f)
-            return "StandShootEast";
+            return "JumpShootEast"; // StandShootEast
         else if (Mathf.Abs(direction.y) <= 0.5f && direction.x < -0.5f)
-            return "StandShootWest";
+            return "JumpShootWest"; // StandShootWest
 
         return string.Empty; // Return empty if no direction matches
     }
