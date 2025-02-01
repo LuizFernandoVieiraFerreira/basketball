@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private Vector2 moveInput;
     
     public Transform ballHoldPosition;
-    private bool hasBall = true;
+    private bool hasBall = false;
 
     private string lastDirection = "East";
 
@@ -35,14 +35,12 @@ public class Player : MonoBehaviour
     void Update()
     {
         // Only process input if this is the active player
-        if (GameManager.Instance.activePlayer != this)
+        if (GameManager.Instance.activePlayer == this)
         {
-            return;
+            // Get player movement input (using the arrow keys for simplicity)
+            moveInput.x = Input.GetAxisRaw("Horizontal");
+            moveInput.y = Input.GetAxisRaw("Vertical");
         }
-
-        // Get player movement input (using the arrow keys for simplicity)
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = Input.GetAxisRaw("Vertical");
 
         // Update animations based on direction
         UpdateAnimation();
@@ -63,6 +61,8 @@ public class Player : MonoBehaviour
             // // Apply the clamped position to the Rigidbody2D
             // rb.MovePosition(new Vector2(clampedX, clampedY));
 
+        if (GameManager.Instance.activePlayer == this)
+        {
             // Calculate movement
             Vector2 desiredPosition = rb.position + moveInput.normalized * moveSpeed * Time.fixedDeltaTime;
 
@@ -71,6 +71,7 @@ public class Player : MonoBehaviour
             {
                 rb.MovePosition(desiredPosition);
             }
+        }
         // }
         // else
         // {
@@ -90,7 +91,6 @@ public class Player : MonoBehaviour
 
     private IEnumerator PlayBallPassAnimation(Vector3 direction)
     {
-        
         passDirection = direction;
 
         string ballPassAnimationName = GetPassAnimationName(passDirection);
@@ -107,7 +107,6 @@ public class Player : MonoBehaviour
 
     private string GetPassAnimationName(Vector3 direction)
     {
-        // Determine the animation name based on direction
         if (direction.y > 0.5f && Mathf.Abs(direction.x) <= 0.5f)
             return "PassReceiveNorth";
         else if (direction.y > 0.5f && direction.x > 0.5f)
@@ -125,7 +124,7 @@ public class Player : MonoBehaviour
         else if (Mathf.Abs(direction.y) <= 0.5f && direction.x < -0.5f)
             return "PassReceiveWest";
 
-        return string.Empty; // Return empty if no direction matches
+        return string.Empty;
     }
 
     public void TriggerNoBallAnimation()
@@ -139,41 +138,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // public void PassBall(Vector3 direction)
-    // {
-    //     isPassing = true;
-    //     hasBall = false;
-
-    //     StartCoroutine(PlayPassAnimation(direction));
-    // }
-
-    // private IEnumerator PlayPassAnimation(Vector3 direction)
-    // {
-        
-    //     passDirection = direction;
-
-    //     string ballPassAnimationName = GetPassAnimationName(passDirection);
-
-    //     if (!string.IsNullOrEmpty(ballPassAnimationName))
-    //     {
-    //         currentAnimation = ballPassAnimationName;
-    //         animator.Play(currentAnimation);
-
-    //         // Wait for the animation duration
-    //         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
-
-    //         string noBallPassAnimationName = GetNoBallPassAnimationName(passDirection);
-
-    //         if (!string.IsNullOrEmpty(noBallPassAnimationName))
-    //         {
-    //             currentAnimation = noBallPassAnimationName;
-    //             animator.Play(currentAnimation);
-    //         }
-    //     }
-    // }
-
     private string GetNoBallPassAnimationName(Vector3 direction) {
-        // Determine the animation name based on direction
         if (direction.y > 0.5f && Mathf.Abs(direction.x) <= 0.5f)
             return "NoBallPassReceiveNorth";
         else if (direction.y > 0.5f && direction.x > 0.5f)
@@ -192,11 +157,6 @@ public class Player : MonoBehaviour
             return "NoBallPassReceiveWest";
 
         return string.Empty;
-    }
-
-    public bool IsPassing()
-    {
-        return isPassing; // This will let the GameManager check if the player is still passing
     }
 
     public void TriggerThrowAnimation(Vector3 direction)
@@ -226,7 +186,6 @@ public class Player : MonoBehaviour
 
     private string GetThrowAnimationName(Vector3 direction)
     {
-        // Determine the animation name based on direction
         if (direction.y > 0.5f && Mathf.Abs(direction.x) <= 0.5f)
             return "JumpShootNorth"; // StandShootNorth
         else if (direction.y > 0.5f && direction.x > 0.5f)
@@ -244,12 +203,7 @@ public class Player : MonoBehaviour
         else if (Mathf.Abs(direction.y) <= 0.5f && direction.x < -0.5f)
             return "JumpShootWest"; // StandShootWest
 
-        return string.Empty; // Return empty if no direction matches
-    }
-
-    public bool IsThrowing()
-    {
-        return isThrowing; // This will let the GameManager check if the player is still passing
+        return string.Empty;
     }
 
     private void UpdateAnimation()
@@ -281,23 +235,19 @@ public class Player : MonoBehaviour
     {
         if (moveInput == Vector2.zero)
         {
-            return lastDirection; // Idle state
+            return lastDirection;
         }
 
-        // Determine direction based on x and y inputs (adjust these as necessary)
         if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
         {
-            // Horizontal movement
             return moveInput.x > 0 ? "East" : "West"; 
         }
         else if (Mathf.Abs(moveInput.y) > Mathf.Abs(moveInput.x))
         {
-            // Vertical movement
             return moveInput.y > 0 ? "North" : "South"; 
         }
         else
         {
-            // Diagonal movement
             if (moveInput.x > 0 && moveInput.y > 0)
                 return "NorthEast";
             else if (moveInput.x < 0 && moveInput.y > 0)
@@ -308,39 +258,9 @@ public class Player : MonoBehaviour
                 return "SouthWest";
         }
 
-        return "East"; // Default to idle if nothing matches
+        return "East";
     }
 
-    public void SetAsActive()
-    {
-        // Enable input and special visuals for the active player
-        // Debug.Log($"{name} is now the active player!");
-    }
-
-    public void SetAsInactive()
-    {
-        // Disable input for inactive players
-        // Debug.Log($"{name} is now inactive.");
-    }
-
-    public bool HasBall()
-    {
-        return hasBall;
-    }
-
-    public void TakeBall()
-    {
-        hasBall = true;
-        // Debug.Log($"{name} now has the ball!");
-    }
-
-    public void DropBall()
-    {
-        hasBall = false;
-        // Debug.Log($"{name} dropped the ball!");
-    }
-
-    // Check if a point is inside a quadrilateral using cross products
     private bool IsInsideCourt(Vector2 point)
     {
         Vector2[] courtBoundary = { topLeft, bottomLeft, bottomRight, topRight };
@@ -373,20 +293,34 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void Unfreeze()
+    public bool HasBall()
     {
-        isPassing = false; // Unfreeze the player
-        // animator.speed = 1f; // Resume normal animation speed
+        return hasBall;
     }
 
-    // public void Freeze()
-    // {
-    //     isPassing = true; // Set the player to be in a passing state
-    //     animator.speed = 0f; // Freeze the animation (no updates)
-    // }
+    public void TakeBall()
+    {
+        hasBall = true;
+    }
 
-    // public void SetIsPassing(bool test)
-    // {
-    //     isPassing = test;
-    // }
+    public void DropBall()
+    {
+        hasBall = false;
+    }
+
+    public bool IsThrowing()
+    {
+        return isThrowing;
+    }
+
+    public bool IsPassing()
+    {
+        return isPassing;
+    }
+
+    public void Unfreeze()
+    {
+        isPassing = false;
+    }
+
 }

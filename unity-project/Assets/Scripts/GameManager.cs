@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
         if (teamPlayers.Count > 0)
         {
-            SetActivePlayer(teamPlayers[0]);
+            SetActivePlayerWithBall(teamPlayers[0]);
         }
     }
 
@@ -74,13 +74,16 @@ public class GameManager : MonoBehaviour
 
     public void SetActivePlayer(Player player)
     {
-        if (activePlayer != null)
-        {
-            activePlayer.SetAsInactive();
-        }
-
         activePlayer = player;
-        activePlayer.SetAsActive();
+
+         // Update the camera to follow the new active player
+        Camera.main.GetComponent<CameraFollow>().SetTarget(activePlayer.transform);
+    }
+
+    public void SetActivePlayerWithBall(Player player)
+    {
+        activePlayer = player;
+        activePlayer.TakeBall();
 
          // Update the camera to follow the new active player
         Camera.main.GetComponent<CameraFollow>().SetTarget(activePlayer.transform);
@@ -138,7 +141,7 @@ public class GameManager : MonoBehaviour
 
         activePlayer.Unfreeze();
 
-        SetActivePlayer(targetPlayer);
+        SetActivePlayerWithBall(targetPlayer);
         // activePlayer.SetIsPassing(false);
     }
 
@@ -284,8 +287,7 @@ public class GameManager : MonoBehaviour
             if (teamPlayers.Count > 0)
             {
                 Player firstPlayer = teamPlayers[0];
-                SetActivePlayer(firstPlayer);
-                firstPlayer.TakeBall();
+                SetActivePlayerWithBall(firstPlayer);
             }
         }
         else
