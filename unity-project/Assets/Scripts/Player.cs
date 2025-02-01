@@ -288,8 +288,8 @@ public class Player : MonoBehaviour
         if (other.CompareTag("Ball") && !hasBall && !isPassing)
         {
             // Debug.Log("Player collided with Ball!");
-            // TakeBall();
-            // Destroy(other.gameObject);
+            TakeBall();
+            Destroy(other.gameObject);
         }
     }
 
