@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        // Debug.Log($"Active player {activePlayer} - isPassing: {activePlayer.IsPassing()}");
         if (Input.GetKeyDown(KeyCode.Space) && activePlayer.HasBall())
         {
             PassBall();
@@ -95,10 +96,7 @@ public class GameManager : MonoBehaviour
             Vector3 direction = (targetPlayer.transform.position - activePlayer.transform.position).normalized;
 
             // Trigger the pass animation on the active player
-            activePlayer.TriggerPassAnimation(direction);
-
-            // Detach the ball from the active player
-            activePlayer.DropBall();
+            activePlayer.PassBall(direction);
 
             // Start the process of waiting for the animation to finish
             StartCoroutine(WaitForPassAnimationAndInstantiateBall(targetPlayer));
@@ -110,10 +108,19 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator WaitForPassAnimationAndInstantiateBall(Player targetPlayer)
     {
-        // Wait until the pass animation is completed in the Player
-        while (activePlayer.IsPassing())
+        // // Wait until the pass animation is completed in the Player
+        // while (activePlayer.IsPassing())
+        // {
+        //     yield return null; // Wait until the passing state is no longer true
+        // }
+
+        // Assuming you have an Animator attached to your player and you're using it to control the animation
+        Animator animator = activePlayer.GetComponent<Animator>();
+
+        // Wait until the animation has reached the last frame (or is done playing)
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f) // normalizedTime reaches 1 when the animation finishes
         {
-            yield return null; // Wait until the passing state is no longer true
+            yield return null; // Wait until the animation reaches the last frame
         }
 
         float yOffset = 12f / 16f;
@@ -121,7 +128,18 @@ public class GameManager : MonoBehaviour
 
         // Now instantiate the ball and move it to the target player
         activeBall = Instantiate(ballPrefab, spawnPosition, Quaternion.identity);
+        activePlayer.TriggerNoBallAnimation();        
         StartCoroutine(MoveBallToTarget(activeBall, targetPlayer));
+
+        while (!targetPlayer.HasBall())
+        {
+            yield return null; // Wait until the ball is received by the target player
+        }
+
+        activePlayer.Unfreeze();
+
+        SetActivePlayer(targetPlayer);
+        // activePlayer.SetIsPassing(false);
     }
 
     private Player FindClosestTeammate()
@@ -164,7 +182,6 @@ public class GameManager : MonoBehaviour
         // Destroy the ball and assign possession to the target player
         Destroy(ball);
         targetPlayer.TakeBall();
-        SetActivePlayer(targetPlayer);
     }
 
     private void ThrowBall()

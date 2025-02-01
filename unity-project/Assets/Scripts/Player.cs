@@ -78,29 +78,120 @@ public class Player : MonoBehaviour
         // }
     }
 
-    public void TriggerPassAnimation(Vector3 direction)
+    public void PassBall(Vector3 direction)
     {
         if (isPassing) return;
-        StartCoroutine(PlayPassAnimation(direction));
+
+        isPassing = true;
+        hasBall = false;
+
+        StartCoroutine(PlayBallPassAnimation(direction));
     }
 
-    private IEnumerator PlayPassAnimation(Vector3 direction)
+    private IEnumerator PlayBallPassAnimation(Vector3 direction)
     {
-        isPassing = true;
+        
         passDirection = direction;
 
-        string passAnimationName = GetPassAnimationName(passDirection);
+        string ballPassAnimationName = GetPassAnimationName(passDirection);
 
-        if (!string.IsNullOrEmpty(passAnimationName))
+        if (!string.IsNullOrEmpty(ballPassAnimationName))
         {
-            currentAnimation = passAnimationName;
+            currentAnimation = ballPassAnimationName;
             animator.Play(currentAnimation);
 
             // Wait for the animation duration
             yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
         }
+    }
 
-        isPassing = false;
+    private string GetPassAnimationName(Vector3 direction)
+    {
+        // Determine the animation name based on direction
+        if (direction.y > 0.5f && Mathf.Abs(direction.x) <= 0.5f)
+            return "PassReceiveNorth";
+        else if (direction.y > 0.5f && direction.x > 0.5f)
+            return "PassReceiveNorthEast";
+        else if (direction.y > 0.5f && direction.x < -0.5f)
+            return "PassReceiveNorthWest";
+        else if (direction.y < -0.5f && Mathf.Abs(direction.x) <= 0.5f)
+            return "PassReceiveSouth";
+        else if (direction.y < -0.5f && direction.x > 0.5f)
+            return "PassReceiveSouthEast";
+        else if (direction.y < -0.5f && direction.x < -0.5f)
+            return "PassReceiveSouthWest";
+        else if (Mathf.Abs(direction.y) <= 0.5f && direction.x > 0.5f)
+            return "PassReceiveEast";
+        else if (Mathf.Abs(direction.y) <= 0.5f && direction.x < -0.5f)
+            return "PassReceiveWest";
+
+        return string.Empty; // Return empty if no direction matches
+    }
+
+    public void TriggerNoBallAnimation()
+    {
+        string noBallPassAnimationName = GetNoBallPassAnimationName(passDirection);
+        
+        if (!string.IsNullOrEmpty(noBallPassAnimationName))
+        {
+            currentAnimation = noBallPassAnimationName;
+            animator.Play(currentAnimation);
+        }
+    }
+
+    // public void PassBall(Vector3 direction)
+    // {
+    //     isPassing = true;
+    //     hasBall = false;
+
+    //     StartCoroutine(PlayPassAnimation(direction));
+    // }
+
+    // private IEnumerator PlayPassAnimation(Vector3 direction)
+    // {
+        
+    //     passDirection = direction;
+
+    //     string ballPassAnimationName = GetPassAnimationName(passDirection);
+
+    //     if (!string.IsNullOrEmpty(ballPassAnimationName))
+    //     {
+    //         currentAnimation = ballPassAnimationName;
+    //         animator.Play(currentAnimation);
+
+    //         // Wait for the animation duration
+    //         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
+
+    //         string noBallPassAnimationName = GetNoBallPassAnimationName(passDirection);
+
+    //         if (!string.IsNullOrEmpty(noBallPassAnimationName))
+    //         {
+    //             currentAnimation = noBallPassAnimationName;
+    //             animator.Play(currentAnimation);
+    //         }
+    //     }
+    // }
+
+    private string GetNoBallPassAnimationName(Vector3 direction) {
+        // Determine the animation name based on direction
+        if (direction.y > 0.5f && Mathf.Abs(direction.x) <= 0.5f)
+            return "NoBallPassReceiveNorth";
+        else if (direction.y > 0.5f && direction.x > 0.5f)
+            return "NoBallPassReceiveNorthEast";
+        else if (direction.y > 0.5f && direction.x < -0.5f)
+            return "NoBallPassReceiveNorthWest";
+        else if (direction.y < -0.5f && Mathf.Abs(direction.x) <= 0.5f)
+            return "NoBallPassReceiveSouth";
+        else if (direction.y < -0.5f && direction.x > 0.5f)
+            return "NoBallPassReceiveSouthEast";
+        else if (direction.y < -0.5f && direction.x < -0.5f)
+            return "NoBallPassReceiveSouthWest";
+        else if (Mathf.Abs(direction.y) <= 0.5f && direction.x > 0.5f)
+            return "NoBallPassReceiveEast";
+        else if (Mathf.Abs(direction.y) <= 0.5f && direction.x < -0.5f)
+            return "NoBallPassReceiveWest";
+
+        return string.Empty;
     }
 
     public bool IsPassing()
@@ -184,29 +275,6 @@ public class Player : MonoBehaviour
         
         // Debug.Log("Playing animation: " + animationName);
         animator.Play(animationName);
-    }
-
-    private string GetPassAnimationName(Vector3 direction)
-    {
-        // Determine the animation name based on direction
-        if (direction.y > 0.5f && Mathf.Abs(direction.x) <= 0.5f)
-            return "PassReceiveNorth";
-        else if (direction.y > 0.5f && direction.x > 0.5f)
-            return "PassReceiveNorthEast";
-        else if (direction.y > 0.5f && direction.x < -0.5f)
-            return "PassReceiveNorthWest";
-        else if (direction.y < -0.5f && Mathf.Abs(direction.x) <= 0.5f)
-            return "PassReceiveSouth";
-        else if (direction.y < -0.5f && direction.x > 0.5f)
-            return "PassReceiveSouthEast";
-        else if (direction.y < -0.5f && direction.x < -0.5f)
-            return "PassReceiveSouthWest";
-        else if (Mathf.Abs(direction.y) <= 0.5f && direction.x > 0.5f)
-            return "PassReceiveEast";
-        else if (Mathf.Abs(direction.y) <= 0.5f && direction.x < -0.5f)
-            return "PassReceiveWest";
-
-        return string.Empty; // Return empty if no direction matches
     }
 
     private string GetMovementDirection()
@@ -296,12 +364,29 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"Is Passing: {isPassing}");
+        // Debug.Log($"Is Passing: {isPassing}");
         if (other.CompareTag("Ball") && !hasBall && !isPassing)
         {
-            Debug.Log("Player collided with Ball!");
-            TakeBall();
-            Destroy(other.gameObject);
+            // Debug.Log("Player collided with Ball!");
+            // TakeBall();
+            // Destroy(other.gameObject);
         }
     }
+
+    public void Unfreeze()
+    {
+        isPassing = false; // Unfreeze the player
+        // animator.speed = 1f; // Resume normal animation speed
+    }
+
+    // public void Freeze()
+    // {
+    //     isPassing = true; // Set the player to be in a passing state
+    //     animator.speed = 0f; // Freeze the animation (no updates)
+    // }
+
+    // public void SetIsPassing(bool test)
+    // {
+    //     isPassing = test;
+    // }
 }
