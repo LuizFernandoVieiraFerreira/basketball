@@ -226,13 +226,26 @@ public class GameManager : MonoBehaviour
         Vector3 startPosition = ball.transform.position;
         Vector3 targetPosition = hoop.position;
 
-        float travelTime = 1f; // Adjust time to make it feel realistic
+        float travelTime = 1f; // Adjust for speed
         float elapsedTime = 0f;
+
+        // Control how high the ball goes depending on the distance
+        float arcHeight = Mathf.Clamp(Vector3.Distance(startPosition, targetPosition) / 2, 1f, 3f);
 
         while (elapsedTime < travelTime)
         {
-            ball.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / travelTime);
+            float t = elapsedTime / travelTime; // 0 to 1
+
+            // X and Z move linearly
+            float x = Mathf.Lerp(startPosition.x, targetPosition.x, t);
+            float z = Mathf.Lerp(startPosition.z, targetPosition.z, t);
+
+            // Y follows a parabola
+            float y = Mathf.Lerp(startPosition.y, targetPosition.y, t) + arcHeight * Mathf.Sin(t * Mathf.PI);
+
+            ball.transform.position = new Vector3(x, y, z);
             elapsedTime += Time.deltaTime;
+
             yield return null;
         }
 
