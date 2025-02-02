@@ -38,7 +38,9 @@ public class Hoop : MonoBehaviour
     private IEnumerator PlayScoreAnimation()
     {
         isScoring = true;
-        animator.Play("Score");
+        animator.Play("Score", 0, 0);
+        yield return null;
+        
         yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
 
         animator.Play("Default");
