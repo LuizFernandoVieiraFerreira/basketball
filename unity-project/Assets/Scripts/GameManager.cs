@@ -62,11 +62,14 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // Debug.Log($"Active player {activePlayer} - isPassing: {activePlayer.IsPassing()}");
-        if (Input.GetKeyDown(KeyCode.Space) && activePlayer.HasBall())
+        if ((Input.GetKeyDown(KeyCode.Space) && activePlayer.HasBall()) ||
+        (Input.GetKeyDown(KeyCode.Z) && activePlayer.HasBall()) ||
+        (Input.GetButtonDown("Fire1") && activePlayer.HasBall()))
         {
             PassBall();
         }
-        else if (Input.GetKeyDown(KeyCode.Z) && activePlayer.HasBall())
+        else if ((Input.GetKeyDown(KeyCode.X) && activePlayer.HasBall()) ||
+        (Input.GetButtonDown("Fire2") && activePlayer.HasBall()))
         {
             ThrowBall();
         }
